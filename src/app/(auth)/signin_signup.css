@@ -1,0 +1,108 @@
+/* styling file for login page and rigistration page */
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.Login_box,
+.registration_box,
+.center_box {
+    width: 35%;
+    height: 590px;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* border: 2px solid brown; */
+}
+
+.login_image,
+.registration_image,
+.image_box {
+    width: 100%;
+    height: 200px;
+    margin: 0px auto;
+    /* border: 2px solid rgb(202, 233, 24); */
+}
+
+.login_form,
+.registration_form {
+    width: 100%;
+    height: 360px;
+    font-weight: bold;
+    /* border: 2px solid rgb(15, 226, 8); */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.option_box {
+    width: 100%;
+    height: 360px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* border: 2px solid blue; */
+}
+
+.current_user_email,
+.current_user_password,
+.current_user_contact,
+.client_email,
+.client_password,
+.client_contact,
+.client_workFeild,
+.client_name,
+.client_image,
+.costumer_email,
+.costumer_password,
+.costumer_contact,
+.costumer_lname,
+.costumer_fname
+{
+    /* font-weight: bold; */
+    border-radius: 5px;
+    width: 100%;
+    border: 2px solid red;
+    padding: 3px;
+
+}
+
+@media only screen and (max-width: 1350px) {
+
+    .Login_box,
+    .registration_box,
+    .center_box {
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width: 1150px) {
+
+    .Login_box,
+    .registration_box,
+    .center_box {
+        width: 65%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .Login_box,
+    .registration_box,
+    .center_box {
+        width: 95%;
+        height: 530px;
+        margin: 0px auto;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* border: 2px solid brown; */
+    }
+
+}

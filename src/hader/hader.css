@@ -1,0 +1,40 @@
+/* hader.css */
+nav {
+    width: 100%;
+    margin: 0px auto;
+    padding: 5px;
+    color: white;
+    border-bottom: 10px solid red;
+    /* background-color: rgba(210, 10, 10, 0.887); */
+    background-color: #333;
+   }
+
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* gap: 60px; */
+}
+
+li:hover{
+    text-decoration: underline;
+    letter-spacing: 2px;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+@media only screen and (max-width: 600px) {
+
+   li{
+    font-size: 9px;
+   }
+
+   li:hover{
+    text-decoration: underline;
+    letter-spacing: 0px;
+    font-weight:normal;
+    /* transition: 0.5s; */
+}
+
+}
+
