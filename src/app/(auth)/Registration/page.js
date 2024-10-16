@@ -21,7 +21,7 @@ const RegistrationPage = () => {
          
           <Link href="/Registration/registerAsAclient" passHref>
             <Button variant="destructive" >
-            Register as Client</Button>
+            Register as Client / Service Provider</Button>
           </Link>
 
           <Link href="/Registration/registerAsAcostumer" passHref>
