@@ -6,48 +6,57 @@ import { useState } from "react";
 import styles from "../../../(auth)/signin_signup.css";
 import logo from "../../../public/logo.png";
 import { Button } from "@/components/ui/button";
-
+import { useRouter } from "next/navigation"; // Import from next/navigation for the App Router
 import { auth } from "@/lib/firebase";
-import {createUserWithEmailAndPassword} from "@/lib/firebase";
-
-
+import { createUserWithEmailAndPassword } from "@/lib/firebase";
 
 const ClientRegrestrationPage = () => {
+  const router = useRouter(); // Initialize useRouter
+
   const [clientEmail, setClientEmail] = useState("");
   const [clientPassword, setClientPassword] = useState("");
   const [clientContact, setClientContact] = useState("");
-  const [clientName, setClientName] = useState("")
-  const [clientWorkFeild, setClientWorkFeild] = useState(" ")
-  const [clientImage, setClientImage] = useState(null)
+  const [clientName, setClientName] = useState("");
+  const [clientWorkFeild, setClientWorkFeild] = useState(" ");
+  const [clientImage, setClientImage] = useState(null);
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-    console.log("Email: ",clientEmail,  "contact no : ",clientContact,  "password: ",clientPassword,
-                 "name: ",clientName,  "work feild : ", clientWorkFeild);
+
+    console.log(
+      "Email: ",
+      clientEmail,
+      "contact no : ",
+      clientContact,
+      "password: ",
+      clientPassword,
+      "name: ",
+      clientName,
+      "work feild : ",
+      clientWorkFeild
+    );
 
     // Signed up functio
     createUserWithEmailAndPassword(auth, clientEmail, clientPassword)
       .then((userCredential) => {
         const user = userCredential.user;
         // console.log("login successfully ---> ", user );
-        alert("Registration successful " );
+        alert("Registration successful ");
+        router.push("/"); // Redirect to home page
 
-         // Clear all fields
-      setClientName("");
-      setClientEmail("");
-      setClientPassword("");
-      setClientContact("");
-      setClientWorkFeild("");
-      setClientImage(null);
-      
-
+        // Clear all fields
+        setClientName("");
+        setClientEmail("");
+        setClientPassword("");
+        setClientContact("");
+        setClientWorkFeild("");
+        setClientImage(null);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage);
-        
+
         // ..
       });
   };
@@ -69,8 +78,7 @@ const ClientRegrestrationPage = () => {
 
         <div className="registration_form">
           <form className="registration_form" onSubmit={handleSubmit}>
-            
-          <div>
+            <div>
               <label htmlFor="fname">Name:</label>
               <input
                 name="name"
@@ -82,7 +90,7 @@ const ClientRegrestrationPage = () => {
                 }}
               />
             </div>
-            
+
             <div>
               <label htmlFor="email">Email:</label>
               <input
@@ -156,43 +164,6 @@ const ClientRegrestrationPage = () => {
             </Button>
           </form>
 
-          {/* <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            required
-            className="client_fname"
-            // value={formData.firstName}
-            onChange={(e)=>{setFirstName(e.target.value); console.log(firstName);
-            }}
-          />
-        </div> */}
-
-          {/* <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            required
-            className="client_lname"
-            // value={formData.lastName}
-            onChange={handleChange}
-          />
-        </div> */}
-          {/* <div>
-          <label htmlFor="image">Image:</label>
-          <input
-            id="image"
-            name="image"
-            type="file"
-            required
-            className="client_image"
-            // onChange={handleFileChange}
-          />
-        </div> */}
         </div>
       </div>
     </>

@@ -7,9 +7,11 @@ import { useState } from "react";
 import styles from "../../(auth)/signin_signup.css"; // Ensure this path is correct
 import logo from "../../public/logo.png";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation"; // Import from next/navigation for the App Router
+
 
 const LoginPage = () => {
-
+  const router = useRouter(); // Initialize useRouter
   // ____usestate hooks
 
   const [email, setEmail] = useState("");
@@ -23,7 +25,7 @@ const LoginPage = () => {
       await signInWithEmailAndPassword(auth, email, password);
        console.log("Login successful");
        alert("Login successful")
-       // Redirect the user or perform further actions
+       router.push("/"); // Redirect to home page
 
     } catch (error) {
       //  setError(error.message); // Set the error message
