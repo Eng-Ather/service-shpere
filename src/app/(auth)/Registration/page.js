@@ -19,12 +19,12 @@ const RegistrationPage = () => {
 
         <div className="option_box">
          
-          <Link href="../Registration/registerAsAclient" passHref>
+          <Link href="/Registration/registerAsAclient" passHref>
             <Button variant="destructive" >
             Register as Client</Button>
           </Link>
 
-          <Link href="../Registration/registerAsAcostumer" passHref>
+          <Link href="/Registration/registerAsAcostumer" passHref>
             <Button variant="destructive">
             Register as Costumer</Button>
           </Link>
