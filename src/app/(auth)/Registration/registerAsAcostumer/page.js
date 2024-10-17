@@ -8,51 +8,53 @@ import { useRouter } from "next/navigation"; // Import from next/navigation for 
 import styles from "../../../(auth)/signin_signup.css"; // Adjust path as necessary
 import logo from "../../../public/logo.png";
 import { Button } from "@/components/ui/button";
+import { addDoc, collection, db } from "@/lib/firebase";
 
 const CostumerRegrestrationPage = () => {
   const router = useRouter(); // Initialize useRouter
 
 // ___use state hooks 
+const [customerName, setCustomerName] = useState("");
 const [customerEmail, setCustomerEmail] = useState("");
 const [customerPassword, setCustomerPassword] = useState("");
 const [customerContact, setCustomerContact] = useState("");
 
  // Handle form submission
- const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
- 
+  
   console.log(
     "Email",
     customerEmail,
-    "contact no : ",
+    "Contact No:",
     customerContact,
-    "password: ",
+    "Password:",
     customerPassword
   );
 
-  // Signed up functio
-  createUserWithEmailAndPassword(auth, customerEmail, customerPassword)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      // console.log("login successfully ---> ", user );
-      alert("Registration successful " );
-      router.push("/"); // Redirect to home page
+  // Signed up function
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, customerEmail, customerPassword);
+    const user = userCredential.user;
+    console.log("User registered successfully:", user);
 
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // console.log(errorMessage);
-      alert(errorMessage);
-
-      
-      // ..
+    // After successful registration, update customer details in Firestore
+    const docRef = await addDoc(collection(db, "customers"), {
+      name: customerName, // Store the actual customer name
+      email: customerEmail,
+      phone: customerContact
     });
+    console.log("Document written with ID:", docRef.id);
+
+    alert("Registration successful!");
+    router.push("/"); // Redirect to home page
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error("Error during registration:", errorMessage);
+    alert(errorMessage);
+  }
 };
-
-
-
-
 
   return (
     <>
@@ -73,6 +75,17 @@ const [customerContact, setCustomerContact] = useState("");
         <div className="registration_form">
          
           <form className="registration_form" onSubmit={handleSubmit}>
+          <div>
+              <label htmlFor="costumername">Name:</label>
+              <input
+                name="costumername"
+                type="text"
+                required
+                className="costumer_name"
+                onChange={(e) => {setCustomerName(e.target.value)}}
+              />
+            </div>
+            
             <div>
               <label htmlFor="email">Email:</label>
               <input

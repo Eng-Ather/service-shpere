@@ -2,9 +2,18 @@
 import Link from "next/link";
 import styles from "./hader.css";
 import logo from "../app/public/logo.png";
-import { useState, useEffect } from "react";
-import { auth, onAuthStateChanged, signOut } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
+
+import { useState, useEffect } from "react";
+import {
+  auth,
+  onAuthStateChanged,
+  signOut,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "@/lib/firebase";
 import {
   Sheet,
   SheetTrigger,
