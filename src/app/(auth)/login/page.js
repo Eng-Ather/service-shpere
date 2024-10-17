@@ -24,8 +24,8 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
        console.log("Login successful");
-       alert("Login successful")
        router.push("/"); // Redirect to home page
+       alert("Login successful")
 
     } catch (error) {
       //  setError(error.message); // Set the error message
