@@ -13,6 +13,7 @@ import {
   query,
   where,
   getDocs,
+  db,
 } from "@/lib/firebase";
 import {
   Sheet,
@@ -27,34 +28,53 @@ import {
 const Header = () => {
   const [currentUserInfo, setCurrentUSerInfo] = useState({
     isLogin: false,
+    currentUserEmail: " ",
+    currentUserFeild: " ",
+    currentUserImageURL: " ",
+    currentUserName: " ",
+    currentUserContact: " ",
+    currentUserRoll: " ",
+
     currentUserId: {},
   });
 
   useEffect(() => {
-    const status = onAuthStateChanged(auth, (user) => {
+    const status = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // setIsLogin(true);
-        setCurrentUSerInfo({
-          isLogin: true,
-          currentUserId: { email: user.email },
-        });
-
         console.log("User is logged in with UID:", user.email);
+
+        // searching current user detail
+        const q = query(
+          collection(db, "usercollection"),
+          where("email", "==", user.email)
+        );
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          console.log(doc.data().phone);
+
+          // storing current user detail to display profile
+          setCurrentUSerInfo({
+            isLogin: true,
+            currentUserEmail: doc.data().email,
+            currentUserFeild: doc.data().feild,
+            currentUserImageURL: doc.data().image,
+            currentUserName: doc.data().name,
+            currentUserContact: doc.data().phone,
+            currentUserRoll: doc.data().roll,
+            currentUserId: { email: user.email },
+          });
+        });
       } else {
-        // setIsLogin(false);
         setIsLogin = false;
         console.log("User is signed out");
       }
     });
-
-    // Cleanup subscription on unmount
-    return () => status();
   }, []);
 
   // logout functio
   const logoutUser = () => {
-    // const auth = getAuth();
-
     signOut(auth)
       .then(() => {
         setCurrentUSerInfo({
@@ -68,6 +88,9 @@ const Header = () => {
         console.error("Error signing out: ", error);
       });
   };
+
+  // logout functio
+  const editProfile = () => {}
 
   return (
     <nav>
@@ -96,16 +119,34 @@ const Header = () => {
               <SheetTrigger>My Profile</SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle>{currentUserInfo.currentUserId.email}</SheetTitle>
-                  <SheetDescription>
-                    <p>gjg,gc,jg,ghcccccccccccc</p>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </SheetDescription>
+                  <SheetTitle style={{backgroundColor:'black', color:"white", borderBottom:"8px solid red", marginTop:"20px"}}>
+                    {currentUserInfo.currentUserName.toLocaleUpperCase()}
+                    </SheetTitle> 
                 </SheetHeader>
-                <Button onClick={logoutUser} variant="destructive">
-                  Logout
-                </Button>
+
+                <SheetDescription className="text-center">
+                     <img
+                     style={{
+                      margin:"20px auto",
+                      width:"200px",
+                      height:"185px",
+                      borderRadius:"100px"
+                     }}
+                      src={currentUserInfo.currentUserImageURL}
+                       alt="image">
+                        </img> 
+                    <p>{currentUserInfo.currentUserFeild}</p>
+                    <p>{currentUserInfo.currentUserRoll}</p>
+                    <p>{currentUserInfo.currentUserContact}</p>
+                    <p>{currentUserInfo.currentUserEmail}</p>
+                    {/* rating */}
+                  </SheetDescription>
+
+                <div style={{height:"70px", marginTop:"10px", display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
+                <Button onClick={editProfile} variant="destructive">Edit Profile</Button>
+                <Button onClick={logoutUser} variant="destructive">Logout</Button>
+                </div>
+                
               </SheetContent>
             </Sheet>
           ) : (
