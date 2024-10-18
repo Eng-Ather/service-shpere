@@ -10,16 +10,20 @@ export default function Home() {
       
       <div className="title_bar">
 
-       <h1 className="text-2xl">Support & Service</h1>
+       {/* <h1 className="text-2xl m-5"> یہاں، مہارتیں آپ کی ضروریات سے جڑتی ہیں</h1> */}
 
-       <Image
+       <h1 className="text-2xl text-red-500 font-extrabold m-3 " style={{textShadow:"-2px 1px 3px black"}}>
+        Here, Skills Connect with Your Needs !
+        </h1>
+
+       {/* <Image
           className="dark:invert"
           src="https://nextjs.org/icons/next.svg"
           alt="Next.js logo"
           width={180}
           height={38}
           priority
-        />
+        /> */}
 
       </div>
       

@@ -88,14 +88,14 @@ body {
 }
 
 .title_bar{
-  border: 2px solid brown;
+  /* border: 2px solid brown; */
   width: 100%;
-  display: flex;
-  justify-content: space-evenly;
+  text-align: center;
 }
 
 .hero_section{
   border: 2px solid brown;
+  margin: 5px auto;
   width: 95%;
 }
 
