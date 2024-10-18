@@ -9,6 +9,15 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // Import from next/navigation for the App Router
 import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "@/lib/firebase";
+import {
+  addDoc,
+  collection,
+  db,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  storage,
+} from "@/lib/firebase";
 
 const ClientRegrestrationPage = () => {
   const router = useRouter(); // Initialize useRouter
@@ -20,45 +29,52 @@ const ClientRegrestrationPage = () => {
   const [clientWorkFeild, setClientWorkFeild] = useState(" ");
   const [clientImage, setClientImage] = useState(null);
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "Email: ",
-      clientEmail,
-      "contact no : ",
-      clientContact,
-      "password: ",
-      clientPassword,
-      "name: ",
-      clientName,
-      "work feild : ",
-      clientWorkFeild
-    );
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        clientEmail,
+        clientPassword
+      );
+      const user = userCredential.user;
 
-    // Signed up functio
-    createUserWithEmailAndPassword(auth, clientEmail, clientPassword)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        // console.log("login successfully ---> ", user );
-        alert("Registration successful ");
-        router.push("/"); // Redirect to home page
+      // Handle image upload
+      let imageUrl = "";
+      if (clientImage) {
+        const imageRef = ref(storage, `clientImage/${user.uid}`); // Create a reference with the user's UID
+        await uploadBytes(imageRef, clientImage); // Upload the file
+        imageUrl = await getDownloadURL(imageRef); // Get the download URL of the uploaded image
+      }
 
-        // Clear all fields
-        setClientName("");
-        setClientEmail("");
-        setClientPassword("");
-        setClientContact("");
-        setClientWorkFeild("");
-        setClientImage(null);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
-
-        // ..
+      // After successful registration, update customer details in Firestore
+      const docRef = await addDoc(collection(db, "usercollection"), {
+        roll: "client",
+        name: clientName,
+        email: clientEmail,
+        phone: clientContact,
+        feild: clientWorkFeild,
+        image: imageUrl
       });
+
+      console.log("Document written with ID:", docRef.id);
+      alert("Registration successful");
+      router.push("/"); // Redirect to home page
+
+      // Clear all fields
+      setClientName("");
+      setClientEmail("");
+      setClientPassword("");
+      setClientContact("");
+      setClientWorkFeild("");
+      setClientImage(null);
+    } catch (error) {
+      // Handle errors from Firebase and Firestore
+      const errorMessage = error.message;
+      alert(errorMessage);
+    }
   };
 
   return (
@@ -153,7 +169,7 @@ const ClientRegrestrationPage = () => {
                 required
                 className="client_image"
                 onChange={(e) => {
-                  setClientImage(e.target.value);
+                  setClientImage(e.target.files[0]);
                 }}
               />
             </div>
@@ -163,7 +179,6 @@ const ClientRegrestrationPage = () => {
               Submit{" "}
             </Button>
           </form>
-
         </div>
       </div>
     </>

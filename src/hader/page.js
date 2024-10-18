@@ -42,7 +42,7 @@ const Header = () => {
         console.log("User is logged in with UID:", user.email);
       } else {
         // setIsLogin(false);
-        setIsLogin = "fals";
+        setIsLogin = false;
         console.log("User is signed out");
       }
     });

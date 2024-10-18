@@ -39,8 +39,9 @@ const [customerContact, setCustomerContact] = useState("");
     console.log("User registered successfully:", user);
 
     // After successful registration, update customer details in Firestore
-    const docRef = await addDoc(collection(db, "customers"), {
-      name: customerName, // Store the actual customer name
+    const docRef = await addDoc(collection(db, "usercollection"), {
+      roll:'customer',
+      name: customerName, 
       email: customerEmail,
       phone: customerContact
     });
