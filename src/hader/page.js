@@ -41,7 +41,7 @@ const Header = () => {
   useEffect(() => {
     const status = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("User is logged in with UID:", user.email);
+        // console.log("User is logged in with UID:", user.email);
 
         // searching current user detail
         const q = query(
@@ -51,8 +51,8 @@ const Header = () => {
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
-          console.log(doc.data().phone);
+          // console.log(doc.id, " => ", doc.data());
+          // console.log(doc.data().phone);
 
           // storing current user detail to display profile
           setCurrentUSerInfo({
