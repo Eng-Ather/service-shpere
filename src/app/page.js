@@ -8,7 +8,8 @@ import { AuthContext, AuthContextProvider } from "@/context/usercontext";
 
 const Home = () => {
   const { currentUserInfo } = useContext(AuthContext);
-  console.log(currentUserInfo.isLogin);
+  
+  console.log(currentUserInfo);
 
   const [data, setData] = useState([]); // State to store fetched data
   const [loading, setLoading] = useState(true); // Loading state
@@ -61,17 +62,18 @@ const Home = () => {
                   <p>{item.feild}</p>
                   <p className="text-sm underline text-gray-400">
                     {currentUserInfo.isLogin ? (
-                      <div>
-                      {item.phone}
-                      <br/>
-                          <a
-                          href="https://wa.me/03212257154"
-                          target="_blank"
-                          class="whatsapp-button"
-                        >
-                          Chat with us on WhatsApp
-                        </a>
-                      </div>
+                    <div>
+                    {item.phone}
+                    <br />
+                    <a
+                      href={`https://wa.me/${item.phone}`} // Use dynamic phone number
+                      target="_blank"
+                      rel="noopener noreferrer" // Security best practice
+                      className="whatsapp-button" // Changed to className
+                    >
+                      Chat with us on WhatsApp
+                    </a>
+                  </div>
                     ) : (
                       <p>
                         please <b> Login </b> to get contact number
@@ -83,7 +85,7 @@ const Home = () => {
                 <div>
                   {
                     <img
-                      style={{ width: "70px", height: "70px" }}
+                      style={{ width: "80px", height: "70px" }}
                       src={item.image}
                       alt="image"
                     />

@@ -139,7 +139,7 @@ const ClientRegrestrationPage = () => {
               <label htmlFor="contact">Contact No:</label>
               <input
                 name="contact"
-                type="tel"
+                type="text"
                 required
                 className="client_contact"
                 onChange={(e) => {
