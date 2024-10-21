@@ -46,9 +46,13 @@ const Home = () => {
       <div className="title_bar">
         <h1
           className="text-2xl text-red-500 font-extrabold m-3 "
-          style={{ textShadow: "-2px 1px 3px black" }}
+          style={{ textShadow: "2px 1px 3px black" }}
         >
-          Here, Skills Connect with Your Needs !
+         SERVICE FOR SELL
+        <p className="mt-4 text-sm text-red-450" style={{ textShadow: "0px 0px 0px black", textDecoration:"underline" }}>
+          
+          Here, Skills Connect with Your Needs !</p>
+ 
         </h1>
       </div>
 
@@ -62,7 +66,7 @@ const Home = () => {
                 <div>
                   <h1 className="font-bold">{item.name}</h1>
                   <p>{item.feild}</p>
-                  <p className="text-sm underline text-gray-400">
+                  <p className="text-sm text-gray-400">
                     {currentUserInfo.isLogin ? (
                       <div className="flex w-32 justify-between">
                         {item.phone}
