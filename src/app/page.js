@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+// import whatsapp from "../public/whatsapp.jpg";
+import  watsapp  from "./public/watsapp.jpg";
 import { Header } from "@/hader/page";
 import { Button } from "@/components/ui/button";
 import { collection, getDocs, db } from "@/lib/firebase";
@@ -8,7 +10,7 @@ import { AuthContext, AuthContextProvider } from "@/context/usercontext";
 
 const Home = () => {
   const { currentUserInfo } = useContext(AuthContext);
-  
+
   console.log(currentUserInfo);
 
   const [data, setData] = useState([]); // State to store fetched data
@@ -62,22 +64,29 @@ const Home = () => {
                   <p>{item.feild}</p>
                   <p className="text-sm underline text-gray-400">
                     {currentUserInfo.isLogin ? (
-                    <div>
-                    {item.phone}
-                    <br />
-                    <a
-                      href={`https://wa.me/${item.phone}`} // Use dynamic phone number
-                      target="_blank"
-                      rel="noopener noreferrer" // Security best practice
-                      className="whatsapp-button" // Changed to className
-                    >
-                      Chat with us on WhatsApp
-                    </a>
-                  </div>
+                      <div className="flex w-32 justify-between">
+                        {item.phone}
+                        <a
+                          href={`https://wa.me/${item.phone}`} // Use dynamic phone number
+                          target="_blank"
+                          rel="noopener noreferrer" // Security best practice
+                          className="whatsapp-button" // Changed to className
+                        >
+                          {/* WhatsApp Icon*/}
+                          <img
+                            src={watsapp.src}
+                            style={{
+                              width: "25px",
+                              height: "20px",
+                              // margin: "0px auto",
+                            }}
+                            alt="Logo"
+                          />
+                        </a>
+                      </div>
                     ) : (
                       <p>
                         please <b> Login </b> to get contact number
-                       
                       </p>
                     )}
                   </p>
