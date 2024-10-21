@@ -3,10 +3,14 @@ import Image from "next/image";
 import { Header } from "@/hader/page";
 import { Button } from "@/components/ui/button";
 import { collection, getDocs, db } from "@/lib/firebase";
-import { useEffect, useState } from "react";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext, AuthContextProvider } from "@/context/usercontext";
 
 const Home = () => {
+  // const {abc} = useContext(AuthContext)
+  const { currentUserInfo } = useContext(AuthContext);
+  console.log(currentUserInfo.isLogin);
+
   const [data, setData] = useState([]); // State to store fetched data
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -21,7 +25,7 @@ const Home = () => {
             // Store only client data in collection
             onlyClientData.push(doc.data());
           }
-          setData(onlyClientData); //updating the retrived data can be used furthure
+          setData(onlyClientData); //updating the retrived data that can be use to display cards
         });
       } catch (error) {
         // console.error("Error fetching data: ", error);
@@ -30,14 +34,10 @@ const Home = () => {
         setLoading(false); // Stop loading
       }
     };
-    fetchData(); // Call the function here
+    fetchData(); // Calling function to fetch all cleint/servise provider data 
   }, []);
 
-  console.log(data);
-  // const onlyClientData = data.filter((item,index)=>{item.roll ==="client"})
-  //   console.log(onlyClientData);
-
-  return (
+   return (
     <div className=" ">
       <Header />
 
@@ -57,21 +57,32 @@ const Home = () => {
           <div>
             {data.map((item, index) => (
               <div className=" client_profile card" key={index}>
-                {/* Wrap the elements in a parent div */}
                 <div>
-                <h1 className="font-bold">{item.name}</h1>
-                <p>{item.feild}</p>
-                <p>{item.phone}</p>
+                  <h1 className="font-bold">{item.name}</h1>
+                  <p>{item.feild}</p>
+                  <p className="text-sm underline text-gray-400">
+                    {currentUserInfo.isLogin ? (
+                      item.phone
+                    ) : (
+                      <p >
+                        please <b> Login </b> to get contact number
+                      </p>
+                    )}
+                  </p>
                 </div>
                 <div>
-                  {<img
-                  style={{width:"70px", height:"70px"}}
-                  src={item.image} alt="image" />}</div>
+                  {
+                    <img
+                      style={{ width: "70px", height: "70px" }}
+                      src={item.image}
+                      alt="image"
+                    />
+                  }
+                </div>
               </div>
             ))}
           </div>
         )}
-
       </main>
 
       <footer className="m-5 row-start-3 flex gap-6 flex-wrap items-center justify-center">

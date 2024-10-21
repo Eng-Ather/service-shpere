@@ -67,7 +67,17 @@ const Header = () => {
           });
         });
       } else {
-        setIsLogin = false;
+        setCurrentUSerInfo({
+          isLogin: false,
+          currentUserEmail: " ",
+          currentUserFeild: " ",
+          currentUserImageURL: " ",
+          currentUserName: " ",
+          currentUserContact: " ",
+          currentUserRoll: " ",
+          currentUserId: {},
+        });
+
         console.log("User is signed out");
       }
     });
@@ -90,7 +100,7 @@ const Header = () => {
   };
 
   // logout functio
-  const editProfile = () => {}
+  const editProfile = () => {};
 
   return (
     <nav>
@@ -119,34 +129,52 @@ const Header = () => {
               <SheetTrigger>My Profile</SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle style={{backgroundColor:'black', color:"white", borderBottom:"8px solid red", marginTop:"20px"}}>
+                  <SheetTitle
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      borderBottom: "8px solid red",
+                      marginTop: "20px",
+                    }}
+                  >
                     {currentUserInfo.currentUserName.toLocaleUpperCase()}
-                    </SheetTitle> 
+                  </SheetTitle>
                 </SheetHeader>
 
                 <SheetDescription className="text-center">
-                     <img
-                     style={{
-                      margin:"20px auto",
-                      width:"200px",
-                      height:"185px",
-                      borderRadius:"100px"
-                     }}
-                      src={currentUserInfo.currentUserImageURL}
-                       alt="image">
-                        </img> 
-                    <p>{currentUserInfo.currentUserFeild}</p>
-                    <p>{currentUserInfo.currentUserRoll}</p>
-                    <p>{currentUserInfo.currentUserContact}</p>
-                    <p>{currentUserInfo.currentUserEmail}</p>
-                    {/* rating */}
-                  </SheetDescription>
+                  <img
+                    style={{
+                      margin: "20px auto",
+                      width: "200px",
+                      height: "185px",
+                      borderRadius: "100px",
+                    }}
+                    src={currentUserInfo.currentUserImageURL}
+                    alt="image"
+                  ></img>
+                  <p>{currentUserInfo.currentUserFeild}</p>
+                  <p>{currentUserInfo.currentUserRoll}</p>
+                  <p>{currentUserInfo.currentUserContact}</p>
+                  <p>{currentUserInfo.currentUserEmail}</p>
+                  {/* rating */}
+                </SheetDescription>
 
-                <div style={{height:"70px", marginTop:"10px", display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
-                <Button onClick={editProfile} variant="destructive">Edit Profile</Button>
-                <Button onClick={logoutUser} variant="destructive">Logout</Button>
+                <div
+                  style={{
+                    height: "70px",
+                    marginTop: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Button onClick={editProfile} variant="destructive">
+                    Edit Profile
+                  </Button>
+                  <Button onClick={logoutUser} variant="destructive">
+                    Logout
+                  </Button>
                 </div>
-                
               </SheetContent>
             </Sheet>
           ) : (
