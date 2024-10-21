@@ -47,7 +47,7 @@ const [customerContact, setCustomerContact] = useState("");
     });
     console.log("Document written with ID:", docRef.id);
 
-    alert("Registration successful!");
+    // alert("Registration successful!");
     router.push("/"); // Redirect to home page
   } catch (error) {
     const errorCode = error.code;

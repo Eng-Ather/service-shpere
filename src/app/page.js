@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext, AuthContextProvider } from "@/context/usercontext";
 
 const Home = () => {
-  // const {abc} = useContext(AuthContext)
   const { currentUserInfo } = useContext(AuthContext);
   console.log(currentUserInfo.isLogin);
 
@@ -34,10 +33,10 @@ const Home = () => {
         setLoading(false); // Stop loading
       }
     };
-    fetchData(); // Calling function to fetch all cleint/servise provider data 
+    fetchData(); // Calling function to fetch all cleint/servise provider data
   }, []);
 
-   return (
+  return (
     <div className=" ">
       <Header />
 
@@ -62,10 +61,21 @@ const Home = () => {
                   <p>{item.feild}</p>
                   <p className="text-sm underline text-gray-400">
                     {currentUserInfo.isLogin ? (
-                      item.phone
+                      <div>
+                      {item.phone}
+                      <br/>
+                          <a
+                          href="https://wa.me/03212257154"
+                          target="_blank"
+                          class="whatsapp-button"
+                        >
+                          Chat with us on WhatsApp
+                        </a>
+                      </div>
                     ) : (
-                      <p >
+                      <p>
                         please <b> Login </b> to get contact number
+                       
                       </p>
                     )}
                   </p>
